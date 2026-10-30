@@ -34,6 +34,7 @@
     .lbl{position:absolute;left:8px;top:-13px;background:#fff;border:1px solid var(--ink);border-radius:6px;padding:1px 6px;font-size:12px;font-weight:800;white-space:nowrap}
     .lbl.go{background:var(--ink);color:#fff}
     .lbl.end{left:auto;right:-18px;top:-36px}
+    .lbl.low{left:auto;right:8px;top:6px}
     .dot{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:var(--ink);border:2px solid #fff}
     .graph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 6px 4px;margin-top:10px}
     .graph p{font-size:13.5px;font-weight:800;margin:0 8px 4px}
@@ -59,7 +60,7 @@
   <div class="card">
     <div class="row"><b>10:00</b><span>명인만두 앞 출발</span></div>
     <div class="row"><b>10:45쯤</b><span>당산나무</span></div>
-    <div class="row"><b>11:30쯤</b><span>중머리재. 여기가 제일 힘든 구간의 끝이에요</span></div>
+    <div class="row"><b>11:30쯤</b><span>중머리재. 잠깐 쉬어요. 여기서 중봉까지도 오르막이에요</span></div>
     <div class="row"><b>12:00~12:30</b><span>중봉 도착, 사진 찍고 쉬기</span></div>
     <div class="row"><b>13:00쯤</b><span>올라온 길로 내려가기 시작</span></div>
     <div class="row"><b>14:40~15:00쯤</b><span>증심사 입구 식당가에서 막걸리. 식당은 내려와서 정해요</span></div>
@@ -134,11 +135,11 @@ try {
   const map = L.map('map', {scrollWheelZoom:false, dragging:!touch});
   let loaded = false;
   const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:18, attribution:'© OpenStreetMap'}).addTo(map);
-  tiles.once('load', () => { loaded = true; });
+  tiles.once('tileload', () => { loaded = true; });
   setTimeout(() => { if (!loaded) { map.remove(); failMap(); } }, 8000);
   const walk = L.polyline(D.walk, {color:'#17202a', weight:4, opacity:.75, dashArray:'6 7'}).addTo(map);
   const up = L.polyline(D.up, {color:'#0f766e', weight:6, opacity:.95}).addTo(map);
-  const pin = (ll, name, go) => L.marker(ll, {interactive:false, icon:L.divIcon({className:'', html:`<div class="dot"></div><div class="lbl ${go?'go':''} ${name.startsWith('중봉')?'end':''}">${name}</div>`, iconSize:[0,0]})}).addTo(map);
+  const pin = (ll, name, go) => L.marker(ll, {interactive:false, icon:L.divIcon({className:'', html:`<div class="dot"></div><div class="lbl ${go?'go':''} ${name.startsWith('중봉')?'end':''} ${name==='중머리재'?'low':''}">${name}</div>`, iconSize:[0,0]})}).addTo(map);
   pin(D.shop, '명인만두 (모이는 곳)', true);
   D.pois.forEach(p => pin([p[1],p[2]], p[0], p[0].startsWith('중봉')));
   map.fitBounds(L.featureGroup([walk, up]).getBounds(), {padding:[34,34]});
