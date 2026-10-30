@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>10/31 무등산 중봉 산행 안내</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+    *{box-sizing:border-box}
+    :root{--ink:#17202a;--muted:#5a6676;--paper:#fffdf8;--line:#d9dee5;--teal:#0f766e;--shade:#f6f7f2}
+    body{margin:0;background:var(--shade);color:var(--ink);font-family:"Pretendard","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;word-break:keep-all;line-height:1.6}
+    .wrap{max-width:560px;margin:0 auto;padding:0 18px}
+    .hero{background:var(--paper);border-bottom:1px solid var(--line)}
+    .hero .wrap{padding-top:22px;padding-bottom:20px}
+    .eyebrow{font-size:13px;font-weight:800;color:var(--teal)}
+    h1{font-size:30px;line-height:1.2;margin:6px 0 12px}
+    .when{font-size:19px;font-weight:800;margin:0}
+    .where{font-size:16px;margin:2px 0 12px;color:#3f4c5d}
+    .warn{background:#fdf6e6;border:1px solid #e8d6a8;border-radius:8px;padding:9px 12px;font-size:14.5px;margin:0 0 12px}
+    .btn{display:block;text-align:center;text-decoration:none;background:var(--ink);color:#fff;font-weight:800;font-size:16px;border-radius:10px;padding:13px;min-height:48px}
+    section{margin-top:26px}
+    h2{font-size:20px;margin:0 0 8px}
+    .note{font-size:13px;color:var(--muted);margin:6px 0 0}
+    .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px 14px}
+    .row{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #eef1f4;font-size:15.5px}
+    .row:last-child{border-bottom:0}
+    .row b{flex:0 0 118px}
+    .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:10px}
+    .facts div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 8px;font-size:12.5px;color:var(--muted);line-height:1.4}
+    .facts b{display:block;font-size:16.5px;color:var(--ink)}
+    #map{height:340px;border-radius:10px;border:1px solid var(--line);background:#dfe5ec;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;padding:14px;text-align:center}
+    .lbl{position:absolute;left:8px;top:-13px;background:#fff;border:1px solid var(--ink);border-radius:6px;padding:1px 6px;font-size:12px;font-weight:800;white-space:nowrap}
+    .lbl.go{background:var(--ink);color:#fff}
+    .lbl.end{left:auto;right:8px}
+    .dot{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:var(--ink);border:2px solid #fff}
+    .graph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 6px 4px;margin-top:10px}
+    .graph p{font-size:13.5px;font-weight:800;margin:0 8px 4px}
+    ul{margin:0;padding:8px 0 8px 18px;font-size:15.5px}
+    li{margin:3px 0}
+    footer{margin:30px 0 40px;font-size:12px;color:var(--muted)}
+    svg text{font-family:inherit}
+  </style>
+</head>
+<body>
+<div class="hero"><div class="wrap">
+  <div class="eyebrow">8명 · 무등산 당일 산행</div>
+  <h1>증심사에서 중봉 찍고, 내려와서 막걸리</h1>
+  <p class="when">10월 31일(토) 오전 10시 출발</p>
+  <p class="where">모이는 곳: 명인만두 광주무등산점 앞 (광주 동구 증심사길 25)</p>
+  <p class="warn">차로 오면 주말엔 8시 30분 이후 주차장이 찬다는 후기가 있어요. 일찍 오거나 버스를 타는 게 좋아요.</p>
+  <a class="btn" href="https://m.place.naver.com/restaurant/1931124639/home">네이버 지도로 길찾기</a>
+</div></div>
+
+<div class="wrap">
+<section>
+  <h2>대략 이렇게 움직여요</h2>
+  <div class="card">
+    <div class="row"><b>10:00</b><span>명인만두 앞 출발</span></div>
+    <div class="row"><b>10:45쯤</b><span>당산나무</span></div>
+    <div class="row"><b>11:30쯤</b><span>중머리재. 여기가 제일 힘든 구간의 끝이에요</span></div>
+    <div class="row"><b>12:00~12:30</b><span>중봉 도착, 사진 찍고 쉬기</span></div>
+    <div class="row"><b>13:00쯤</b><span>올라온 길로 내려가기 시작</span></div>
+    <div class="row"><b>14:40~15:00쯤</b><span>증심사 입구 식당가에서 막걸리. 식당은 내려와서 정해요</span></div>
+  </div>
+  <p class="note">후기 기록으로 어림잡은 시간이라 걷는 속도에 따라 달라져요. 늦어지면 중머리재에서 쉬고 내려와도 됩니다.</p>
+</section>
+
+<section>
+  <h2>어디까지 가나요</h2>
+  <div class="facts">
+    <div><b>약 9~10km</b>왕복, 명인만두부터</div>
+    <div><b>915m</b>중봉 높이</div>
+    <div><b>보통 이상</b>돌길과 계단이 많아요</div>
+  </div>
+  <div id="map">지도 불러오는 중</div>
+  <div class="graph">
+    <p>증심사부터 중봉까지 높이 (약 660m를 올라가요)</p>
+    <svg id="prof" width="100%" height="180" role="img" aria-label="증심사 235미터에서 중머리재를 지나 중봉까지 오르는 높이 그래프"></svg>
+  </div>
+  <p class="note">그래프는 지형 자료라 실제 높이보다 조금 낮게 나와요.</p>
+</section>
+
+<section>
+  <h2>챙겨 오세요</h2>
+  <div class="card"><ul>
+    <li>물과 간식. 위쪽은 화장실이 적으니 출발 전에 다녀오세요</li>
+    <li>바람막이. 31일 광주 시내 낮 19도 예보지만 중봉은 바람이 세요</li>
+    <li>등산화나 바닥이 잘 잡히는 운동화</li>
+  </ul></div>
+</section>
+
+<section>
+  <h2>오는 길</h2>
+  <div class="card">
+    <div class="row"><b>버스</b><span>54·첨단09·운림51번, 증심사 종점 하차</span></div>
+    <div class="row"><b>주차</b><span>공영 하루 최대 3,900원, 사설 약 4,000원 (후기 기준)</span></div>
+  </div>
+</section>
+
+<footer>지도 © OpenStreetMap 기여자 · 시간과 주차 정보는 등산 후기 기준 · 날씨는 10월 30일 예보 기준</footer>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const D = {"walk": [[35.134193, 126.955512], [35.13419, 126.955572], [35.134168, 126.955666], [35.134148, 126.955731], [35.134114, 126.955844], [35.13361, 126.95727], [35.13343, 126.957908], [35.133418, 126.957986], [35.133412, 126.958023], [35.133403, 126.958098], [35.133394, 126.958485], [35.133413, 126.959055], [35.1334, 126.959147], [35.133344, 126.959201], [35.133091, 126.959713], [35.132991, 126.959769], [35.132686, 126.960029], [35.13257, 126.960263], [35.132562, 126.960574], [35.132461, 126.960655], [35.132438, 126.960853], [35.132402, 126.961177], [35.132426, 126.96142], [35.132447, 126.961483], [35.132378, 126.961646], [35.132303, 126.961788], [35.132236, 126.961955], [35.132019, 126.962339], [35.131761, 126.962749], [35.13151, 126.963148], [35.131449, 126.963291], [35.131387, 126.963476], [35.131299, 126.963649], [35.13121, 126.96397], [35.1312, 126.9642], [35.13117, 126.96427], [35.131098, 126.96441], [35.1309, 126.96453], [35.13055, 126.964852], [35.130485, 126.964856], [35.13043, 126.96491], [35.13034, 126.96496], [35.12989, 126.96544], [35.12982, 126.96561], [35.129746, 126.965796], [35.12982, 126.966033], [35.129795, 126.96632], [35.12977, 126.96661], [35.12971, 126.96674], [35.129531, 126.966991], [35.129391, 126.967137], [35.129342, 126.967164], [35.1282648, 126.9694608]], "up": [[35.128265, 126.969461], [35.127803, 126.969575], [35.127347, 126.969893], [35.127013, 126.970366], [35.126943, 126.971006], [35.126697, 126.97126], [35.126308, 126.971663], [35.125839, 126.971968], [35.125396, 126.972339], [35.124907, 126.972586], [35.124429, 126.972866], [35.124099, 126.973343], [35.123928, 126.973954], [35.123718, 126.974552], [35.123462, 126.975132], [35.123152, 126.975663], [35.122866, 126.976188], [35.122892, 126.976811], [35.123071, 126.97743], [35.123105, 126.978067], [35.122782, 126.978577], [35.122382, 126.978866], [35.121969, 126.979291], [35.121549, 126.979699], [35.121243, 126.98024], [35.120941, 126.980767], [35.120758, 126.981356], [35.120383, 126.981745], [35.120076, 126.982265], [35.119708, 126.982733], [35.119369, 126.983224], [35.119228, 126.983861], [35.118964, 126.984373], [35.119084, 126.984976], [35.119346, 126.985547], [35.119715, 126.985988], [35.119965, 126.986567], [35.12009, 126.987207], [35.120078, 126.987847], [35.12012, 126.988428], [35.120545, 126.988409], [35.120744, 126.989], [35.120616, 126.989555], [35.120768, 126.990165], [35.121219, 126.990386], [35.121564, 126.990889], [35.121956, 126.991329], [35.122312, 126.991802], [35.122563, 126.992376]], "prof": [[0.0, 235.0], [0.056, 238.0], [0.118, 248.0], [0.178, 265.0], [0.241, 276.0], [0.279, 285.0], [0.339, 297.0], [0.402, 302.0], [0.466, 303.0], [0.528, 312.0], [0.591, 319.0], [0.651, 324.0], [0.714, 331.0], [0.777, 342.0], [0.84, 358.0], [0.904, 368.0], [0.965, 377.0], [1.025, 389.0], [1.089, 403.0], [1.15, 417.0], [1.213, 427.0], [1.268, 434.0], [1.332, 442.0], [1.395, 452.0], [1.459, 465.0], [1.521, 478.0], [1.582, 496.0], [1.64, 509.0], [1.702, 527.0], [1.765, 538.0], [1.827, 562.0], [1.891, 577.0], [1.949, 588.0], [2.01, 600.0], [2.073, 623.0], [2.134, 644.0], [2.197, 665.0], [2.261, 684.0], [2.323, 701.0], [2.379, 723.0], [2.43, 742.0], [2.491, 774.0], [2.547, 788.0], [2.609, 806.0], [2.666, 826.0], [2.73, 849.0], [2.793, 866.0], [2.855, 886.0], [2.918, 898.0]], "shop": [35.1342854, 126.9555176], "pois": [["증심사", 35.1287186, 126.9697477], ["중머리재", 35.11896, 126.98431], ["중봉 915m", 35.12257, 126.99253]], "marks": [["증심사", 0], ["중머리재", 1.95], ["중봉", 2.92]]};
+
+function drawProfile(){
+  const svg = document.getElementById('prof');
+  const W = svg.clientWidth || 340, H = 180, m = {l:42, r:14, t:24, b:24};
+  const xMax = D.prof[D.prof.length-1][0], yMax = 1000;
+  const X = v => m.l + v/xMax*(W-m.l-m.r), Y = v => H-m.b - v/yMax*(H-m.t-m.b);
+  const path = D.prof.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1)).join('');
+  let g = '';
+  for (let v=0; v<=1000; v+=250) g += `<line x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#e6eaf0"/><text x="${m.l-5}" y="${Y(v)+4}" font-size="11" fill="#5a6676" text-anchor="end">${v}m</text>`;
+  for (let v=0; v<=2; v++) g += `<text x="${X(v)}" y="${H-7}" font-size="11" fill="#5a6676" text-anchor="middle">${v}km</text>`;
+  g += `<path d="${path}L${X(xMax)},${Y(0)}L${X(0)},${Y(0)}Z" fill="#0f766e" fill-opacity=".16"/><path d="${path}" fill="none" stroke="#0f766e" stroke-width="2"/>`;
+  D.marks.forEach(([name,km],i)=>{
+    const p = D.prof.reduce((a,b)=>Math.abs(b[0]-km)<Math.abs(a[0]-km)?b:a), x = X(p[0]), y = Y(p[1]);
+    const anchor = i===0?'start':(i===D.marks.length-1?'end':'middle');
+    g += `<circle cx="${x}" cy="${y}" r="4" fill="#fff" stroke="#17202a" stroke-width="2"/><text x="${x}" y="${y-9}" font-size="12" font-weight="700" fill="#17202a" text-anchor="${anchor}">${name}</text>`;
+  });
+  svg.innerHTML = g;
+}
+drawProfile();
+addEventListener('resize', drawProfile);
+
+const box = document.getElementById('map');
+const failMap = () => { box.textContent = '지도를 불러오지 못했어요. 인터넷 상태 때문일 수 있어요. 위 네이버 지도로 길찾기 버튼을 눌러 주세요.'; };
+try {
+  box.textContent = '';
+  const touch = L.Browser.mobile;
+  const map = L.map('map', {scrollWheelZoom:false, dragging:!touch});
+  let loaded = false;
+  const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:18, attribution:'© OpenStreetMap'}).addTo(map);
+  tiles.once('load', () => { loaded = true; });
+  setTimeout(() => { if (!loaded) { map.remove(); failMap(); } }, 8000);
+  const walk = L.polyline(D.walk, {color:'#17202a', weight:4, opacity:.75, dashArray:'6 7'}).addTo(map);
+  const up = L.polyline(D.up, {color:'#0f766e', weight:6, opacity:.95}).addTo(map);
+  const pin = (ll, name, go) => L.marker(ll, {interactive:false, icon:L.divIcon({className:'', html:`<div class="dot"></div><div class="lbl ${go?'go':''} ${name.startsWith('중봉')?'end':''}">${name}</div>`, iconSize:[0,0]})}).addTo(map);
+  pin(D.shop, '명인만두 (모이는 곳)', true);
+  D.pois.forEach(p => pin([p[1],p[2]], p[0], p[0].startsWith('중봉')));
+  map.fitBounds(L.featureGroup([walk, up]).getBounds(), {padding:[34,34]});
+  const base = map.getZoom();
+  if (touch) map.on('zoomend', () => { map.getZoom() > base ? map.dragging.enable() : map.dragging.disable(); });
+} catch (e) { failMap(); }
+</script>
+</body>
+</html>
